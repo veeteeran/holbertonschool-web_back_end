@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Docstring for task 2"""
+"""Execute async_comprehension four times in parallel using asyncio.gather"""
 import asyncio
 import time
 async_comprehension = __import__('1-async_comprehension').async_comprehension
