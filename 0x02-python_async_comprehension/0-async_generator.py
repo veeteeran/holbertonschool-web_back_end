@@ -2,11 +2,11 @@
 """Docstring for task 0"""
 import asyncio
 from random import uniform
-from typing import Generator
+from typing import AsyncGenerator
 
 
-async def async_generator() -> Generator[int, None, None]:
+async def async_generator() -> AsyncGenerator[float, None]:
     """Yield a random number between 0 and 10"""
     for i in range(10):
         await asyncio.sleep(1)
-        return uniform(0, 10)
+        yield uniform(0, 10)
