@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Docstring for task 2"""
 import asyncio
-from time import time
+import time
 async_comprehension = __import__('1-async_comprehension').async_comprehension
 
 
@@ -12,7 +12,7 @@ async def measure_runtime() -> float:
             Returns:
                     total run time
     """
-    start = time()
+    start = time.time()
 
     await asyncio.gather(
         async_comprehension(),
@@ -21,6 +21,6 @@ async def measure_runtime() -> float:
         async_comprehension(),
     )
 
-    end = time()
+    end = time.time()
 
     return end - start
