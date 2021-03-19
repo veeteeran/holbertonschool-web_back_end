@@ -16,13 +16,21 @@ class FIFOCache(BaseCaching):
                         key: key for item in self.cache_data dict
                         item: contains value for key
         """
+        keyList = list(self.cache_data)[0:]
         if key and item:
-            self.cache_data.update({key: item})
+            if key in keyList:
+                del self.cache_data[key]
+                keyList.remove(key)
 
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            firstItem = list(self.cache_data)[0:1][0]
-            del self.cache_data[firstItem]
-            print(f"DISCARD: {firstItem}")
+            keyList.append(key)
+
+            if len(keyList) > BaseCaching.MAX_ITEMS:
+                del self.cache_data[keyList[0]]
+                poppedKey = keyList.pop(0)
+                print(f"DISCARD: {poppedKey}")
+        
+            self.cache_data.update({key: item})
+            print(self.cache_data)
 
     def get(self, key):
         """
