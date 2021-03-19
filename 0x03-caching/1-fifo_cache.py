@@ -28,9 +28,8 @@ class FIFOCache(BaseCaching):
                 del self.cache_data[keyList[0]]
                 poppedKey = keyList.pop(0)
                 print(f"DISCARD: {poppedKey}")
-        
+
             self.cache_data.update({key: item})
-            print(self.cache_data)
 
     def get(self, key):
         """
