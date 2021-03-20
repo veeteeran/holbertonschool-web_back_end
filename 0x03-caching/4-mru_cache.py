@@ -20,16 +20,19 @@ class MRUCache(BaseCaching):
         """
         keyList = list(self.cache_data)[0:]
         if key and item:
+            # Does each entry have to stay in the same block?
             if key in keyList:
-                self.__updateCache(key, item)
-
-            if len(keyList) < self.MAX_ITEMS:
+                self.cache_data.update({key: item})
                 self.__MRUDict.update({key: self.__bit})
                 self.__bit += 1
-                self.cache_data.update({key: item})
             else:
-                discardedKey = self.__updateCache(key, item)
-                print(f"DISCARD: {discardedKey}")
+                if len(self.cache_data) < self.MAX_ITEMS:
+                    self.__MRUDict.update({key: self.__bit})
+                    self.__bit += 1
+                    self.cache_data.update({key: item})
+                else:
+                    discardedKey = self.__updateCache(key, item)
+                    print(f"DISCARD: {discardedKey}")
 
     def get(self, key):
         """
@@ -40,8 +43,10 @@ class MRUCache(BaseCaching):
                         value of given key
                         if key is None or doesn't exist returns None
         """
-        self.__MRUDict[key] = self.__bit
-        self.__bit += 1
+        keyList = list(self.cache_data)[0:]
+        if key in keyList:
+            self.__MRUDict[key] = self.__bit
+            self.__bit += 1
         return self.cache_data.get(key)
 
     def __updateCache(self, key, item):
