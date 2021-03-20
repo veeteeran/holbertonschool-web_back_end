@@ -20,7 +20,6 @@ class MRUCache(BaseCaching):
         """
         keyList = list(self.cache_data)[0:]
         if key and item:
-            # Does each entry have to stay in the same block?
             if key in keyList:
                 self.cache_data.update({key: item})
                 self.__MRUDict.update({key: self.__bit})
@@ -64,9 +63,9 @@ class MRUCache(BaseCaching):
         cacheVals[index] = item
 
         self.cache_data.clear()
-        self.cache_data = {k:v for k, v in zip(keys, cacheVals)}
+        self.cache_data = {k: v for k, v in zip(keys, cacheVals)}
 
         self.__MRUDict.clear()
-        self.__MRUDict = {k:v for k, v in zip(keys, values)}
+        self.__MRUDict = {k: v for k, v in zip(keys, values)}
 
         return maxKey
