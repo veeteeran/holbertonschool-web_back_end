@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """LFU caching module"""
 from base_caching import BaseCaching
+from collections import OrderedDict
 
 
 class LFUCache(BaseCaching):
     """
-        LFU Caching algorithm
+        LFU Caching, Inherits from BaseCaching
     """
-    __LFUDict = {}
-    __bit = 0
+
+    def __init__(self):
+        """Initialize LRU Class"""
+        self.accessedDict = OrderedDict()
+        self.unaccessedDict = OrderedDict()
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
         """
@@ -18,20 +23,19 @@ class LFUCache(BaseCaching):
                         key: key for item in self.cache_data dict
                         item: contains value for key
         """
-        keyList = list(self.cache_data)[0:]
         if key and item:
-            if key in keyList:
+            if key in self.cache_data:
+                self.cache_data.pop(key)
                 self.cache_data.update({key: item})
-                self.__LFUDict.update({key: self.__bit})
-                self.__bit += 1
+                self.unaccessedDict.pop(key)
+                self.unaccessedDict.update({key: item})
             else:
-                if len(self.cache_data) < self.MAX_ITEMS:
-                    self.__LFUDict.update({key: self.__bit})
-                    self.__bit += 1
-                    self.cache_data.update({key: item})
-                else:
-                    discardedKey = self.__updateCache(key, item)
-                    print(f"DISCARD: {discardedKey}")
+                self.cache_data.update({key: item})
+                self.unaccessedDict.update({key: item})
+
+            if len(self.cache_data) > self.MAX_ITEMS:
+                discarded = self.__updateDicts(key, item)
+                print(f"DISCARD: {discarded}")
 
     def get(self, key):
         """
@@ -42,30 +46,35 @@ class LFUCache(BaseCaching):
                         value of given key
                         if key is None or doesn't exist returns None
         """
-        keyList = list(self.cache_data)[0:]
-        if key in keyList:
-            self.__LFUDict[key] = self.__bit
-            self.__bit += 1
+        if key in self.cache_data:
+            self.accessedDict.update({key: self.cache_data[key]})
+            self.cache_data.move_to_end(key)
+
+        if key in self.unaccessedDict:
+            self.unaccessedDict.pop(key)
+
         return self.cache_data.get(key)
 
-    def __updateCache(self, key, item):
-        """Update the cache dictionary"""
-        keys = list(self.__LFUDict)[0:]
-        values = [self.__LFUDict[k] for k in keys]
-        cacheVals = [self.cache_data[k] for k in keys]
+    def __updateDicts(self, key, item):
+        """Update cache_data Dict"""
+        if len(self.accessedDict) == 4:
+            accessedKeys = list(self.accessedDict)[0:]
+            discarded = accessedKeys.pop(0)
+            self.accessedDict.pop(discarded)
 
-        minVal = min(values)
-        index = values.index(minVal)
-        minKey = keys[index]
+        else:
+            unaccessedKeys = list(self.unaccessedDict)[0:]
+            discarded = unaccessedKeys.pop(0)
+            self.unaccessedDict.pop(discarded)
 
-        keys[index] = key
-        values[index] = self.__bit - 1
-        cacheVals[index] = item
+        self.unaccessedDict.update({key: item})
 
         self.cache_data.clear()
-        self.cache_data = {k: v for k, v in zip(keys, cacheVals)}
 
-        self.__LFUDict.clear()
-        self.__LFUDict = {k: v for k, v in zip(keys, values)}
+        for k, v in self.unaccessedDict.items():
+            self.cache_data[k] = v
 
-        return minKey
+        for k, v in self.accessedDict.items():
+            self.cache_data[k] = v
+
+        return discarded
