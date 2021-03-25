@@ -54,8 +54,8 @@ class Server:
             next_index += 1
 
         data = [self.__indexed_dataset[i] for i in range(start, end)]
-        
+
         output = {'index': index, 'next_index': next_index,
                   'page_size': page_size, 'data': data}
- 
+
         return output
