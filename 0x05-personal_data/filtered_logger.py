@@ -7,6 +7,7 @@ from typing import List
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
+
 def filter_datum(fields: List[str],
                  redaction: str,
                  message: str,
@@ -21,11 +22,10 @@ def filter_datum(fields: List[str],
                     separator: a string representing which character
                                separates fields in the log line (message)
     """
-    log_message = message
     for field in fields:
         regex = field + f'[^{separator}]*'
-        log_message = re.sub(regex, f"{field}={redaction}", log_message)
-    return log_message
+        message = re.sub(regex, f"{field}={redaction}", message)
+    return message
 
 
 def get_logger() -> logging.Logger:
@@ -40,6 +40,9 @@ def get_logger() -> logging.Logger:
     ch.setFormatter(RedactingFormatter)
     # Add ch to logger
     logger.addHandler(ch)
+
+    return logger
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
