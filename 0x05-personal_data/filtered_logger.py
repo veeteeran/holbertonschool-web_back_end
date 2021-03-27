@@ -33,7 +33,7 @@ def get_logger() -> logging.Logger:
     # Create logger
     logger = logging.getLogger('user_data')
     logger.setLevel(logging.INFO)
-    logger.propogate(False)
+    logger.propgate = False
     # Create console handler and set level to debug
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
