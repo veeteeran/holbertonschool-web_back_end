@@ -23,7 +23,6 @@ class Auth():
 
     def authorization_header(self, request=None) -> str:
         """authorization_header method"""
-        print(f"Authorization: {request.headers.get('Authorization')}")
         if request is None or request.headers.get('Authorization') is None:
             return None
 
