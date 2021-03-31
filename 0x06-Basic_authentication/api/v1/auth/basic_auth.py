@@ -76,6 +76,9 @@ class BasicAuth(Auth):
         if user_pwd is None or type(user_pwd) is not str:
             return None
 
+        if User is None:
+            return None
+
         users = User.search({'email': user_email})
         if users is None:
             return None
@@ -85,3 +88,9 @@ class BasicAuth(Auth):
                 return user
 
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """
+            Overloads Auth and retrieves the User instance for a request
+        """
+        pass
