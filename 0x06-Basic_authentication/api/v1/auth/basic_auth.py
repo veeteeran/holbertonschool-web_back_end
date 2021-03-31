@@ -99,8 +99,7 @@ class BasicAuth(Auth):
             ah_extract = self.extract_base64_authorization_header(auth_header)
             ah_decode = self.decode_base64_authorization_header(ah_extract)
             email, password = self.extract_user_credentials(ah_decode)
-            
+
             return self.user_object_from_credentials(email, password)
 
         return None
-
