@@ -3,6 +3,7 @@
 from api.v1.auth.auth import Auth
 from base64 import b64decode, b64encode
 import hashlib
+from models.base import DATA
 from models.user import User
 from typing import Tuple, TypeVar
 
@@ -74,6 +75,9 @@ class BasicAuth(Auth):
             return None
 
         if user_pwd is None or type(user_pwd) is not str:
+            return None
+
+        if DATA.get('User') is None:
             return None
 
         users = User.search({'email': user_email})
