@@ -14,9 +14,6 @@ class Auth():
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
 
-        if path[-1] != '/':
-            path = path + '/'
-
         for ep in excluded_paths:
             regex = f"{ep}.*"
             match = re.search(regex, path)
