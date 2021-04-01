@@ -3,6 +3,7 @@
 """
 from flask import request
 from models.user import User
+import re
 from typing import List, TypeVar
 
 
@@ -16,8 +17,11 @@ class Auth():
         if path[-1] != '/':
             path = path + '/'
 
-        if path not in excluded_paths:
-            return True
+        for ep in excluded_paths:
+            regex = f"{ep}.*"
+            match = re.search(regex, path)
+            if not match:
+                return True
 
         return False
 
