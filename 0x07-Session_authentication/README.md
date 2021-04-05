@@ -1,22 +1,21 @@
-# 0x06. Basic authentication
+# 0x07. Session authentication
 
 ## Resources:books:
 Read or watch:
-* [REST API Authentication Mechanisms](https://intranet.hbtn.io/rltoken/Yx1Na2qEzCLnke8RnpACDw)
-* [Base64 in Python](https://intranet.hbtn.io/rltoken/R2kTeyWl2ef19mdxQuffww)
-* [HTTP header Authorization](https://intranet.hbtn.io/rltoken/5BfGd-_oV9Asi_Ymi_lRSA)
-* [Flask](https://intranet.hbtn.io/rltoken/3ivma6PpGZfjzDrA2zLq7g)
-* [Base64 - concept](https://intranet.hbtn.io/rltoken/8ckHTvJq00WnvgEmn6GGtg)
+* [REST API Authentication Mechanisms - Only the session auth part](https://intranet.hbtn.io/rltoken/2BkSCmFq5HYwztDCQuAwvg)
+* [HTTP Cookie](https://intranet.hbtn.io/rltoken/NMb6uXgVOVq0Tv7x_dbLEA)
+* [Flask](https://intranet.hbtn.io/rltoken/D0AUceSjWti95ffW06MTHQ)
+* [Flask Cookie](https://intranet.hbtn.io/rltoken/-TgSvgacXt556tD3bMFXcg)
 
 ---
 ## Learning Objectives:bulb:
 What you should learn from this project:
 
 * What authentication means
-* What Base64 is
-* How to encode a string in Base64
-* What Basic authentication means
-* How to send the Authorization header
+* What session authentication means
+* What Cookies are
+* How to send Cookies
+* How to parse Cookies 
 
 ---
 ---
