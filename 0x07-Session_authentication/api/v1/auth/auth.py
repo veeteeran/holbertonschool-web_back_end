@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Module of Auth class
 """
-from flask import make_response, request
+from flask import request
 from models.user import User
 from os import getenv
 from typing import List, TypeVar
