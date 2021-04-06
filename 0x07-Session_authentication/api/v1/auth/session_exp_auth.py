@@ -2,7 +2,6 @@
 """SessionExpAuth Class module"""
 from api.v1.auth.session_auth import SessionAuth
 from datetime import datetime, timedelta
-import os
 from os import getenv
 
 
@@ -10,17 +9,13 @@ class SessionExpAuth(SessionAuth):
     """SessionExpAuth inherits from SessionAuth"""
     def __init__(self):
         """Overloading the intit method"""
-        try:
-            duration = os.environ['SESSION_DURATION']
-            duration = int(os.environ['SESSION_DURATION'])
-        except (KeyError, ValueError):
-            os.environ['SESSION_DURATION'] = 0
-
-        self.session_duration = duration
+        if getenv('SESSION_DURATION'):
+            self.session_duration = int(getenv('SESSION_DURATION'))
+        else:
+            self.session_duration = 0
 
     def create_session(self, user_id=None):
         """Creates a Session ID for a user_id"""
-
         session_id = super().create_session(user_id)
         if session_id is None:
             return None
