@@ -2,7 +2,7 @@
 """ Module of Session Auth views
 """
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, jsonify, make_response, request
 from models.user import User
 from os import getenv
 
@@ -29,6 +29,6 @@ def session_auth():
             from api.v1.app import auth
             session_name = getenv('SESSION_NAME')
             session_id = auth.create_session(user.id)
-            out = jsonify(state=0, msg='success')
-            out.set_cookie(session_name, session_id)
-            return out
+            response = jsonify(user.to_json())
+            response.set_cookie(session_name, session_id)
+            return response
