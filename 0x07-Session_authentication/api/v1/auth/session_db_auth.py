@@ -14,20 +14,22 @@ class SessionDBAuth(SessionExpAuth):
         new_session.user_id = user_id
         new_session.session_id = session_id
         new_session.save()
-        '''
-        print(f"DATA: {DATA}")
-        print(f"user_id_by_session_id: {self.user_id_by_session_id}")
-        print(f"session_id: {session_id}")
-        '''
+
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
         """Returns a User ID based on a Session ID"""
-        #session_dict = self.user_id_by_session_id.get(session_id)
-        #return session_dict.get('user_id')
         user_id = super().user_id_for_session_id(session_id)
         return user_id
 
     def destroy_session(self, request=None):
         """Deletes the user session / logout"""
+        '''
+        if request is None:
+            return False
+        user_id = self.user_id_for_session_id(self.session_cookie(request))
+        user_session = UserSession.get(user_id)
+        del self.user_id_by_session_id[user_session]
+        return True
+        '''
         super().destroy_session(request)
