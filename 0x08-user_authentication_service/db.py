@@ -33,7 +33,7 @@ class DB:
         session.add(user)
 
         session.commit()
-        
+
         return user
 
     def find_user_by(self, **kwargs):
@@ -56,5 +56,4 @@ class DB:
             else:
                 raise ValueError
         self._session.commit()
-        print(user.hashed_password)
         return None
