@@ -45,7 +45,7 @@ class DB:
 
         return session.query(User).filter_by(**kwargs).one()
 
-    def update_user(self, user_id: int, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs: str) -> None:
         """
             Update the user attributes from kwargs
         """
@@ -53,7 +53,8 @@ class DB:
         for k, v in kwargs.items():
             if hasattr(user, k):
                 setattr(user, k, v)
+                self._session.commit()
+                return None
             else:
                 raise ValueError
-        self._session.commit()
         return None
