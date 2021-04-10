@@ -27,8 +27,8 @@ def users():
         - Register user and return jsonified info or
         - 400 if user email in db
     """
-    email = request.form['email']
-    password = request.form['password']
+    email = request.form.get('email')
+    password = request.form.get('password')
     try:
         AUTH.register_user(email, password)
         return jsonify(email=email, message="user created")
@@ -45,8 +45,8 @@ def login():
         - JSON payload of the form
         - 401 if login information is incorrect
     """
-    email = request.form['email']
-    password = request.form['password']
+    email = request.form.get('email')
+    password = request.form.get('password')
 
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
@@ -98,8 +98,7 @@ def get_reset_password_token():
         - payload {"email": "<user email>", "reset_token": "<reset token>"}
         - 403 if email not registered
     """
-    # If this doesn't work try request.form['email']
-    email = request.args.get('email')
+    email = request.form.get('email')
     if email:
         try:
             token = AUTH.get_reset_password_token(email)
@@ -118,12 +117,9 @@ def update_password():
         - Payload {"email": "<user email>", "message": "Password updated"}
         - 403 if token is invalid
     """
-    # If this doesn't work try request.form['email']
-    email = request.args.get('email')
-    # If this doesn't work try request.form['reset_token']
-    reset_token = request.args.get('reset_token')
-    # If this doesn't work try request.form['new_password']
-    password = request.args.get('new_password')
+    email = request.form.get('email')
+    reset_token = request.form.get('reset_token')
+    password = request.form.get('new_password')
     try:
         AUTH.update_password(reset_token, new_password)
         return jsonify(email=email, message="Password updated"), 200
