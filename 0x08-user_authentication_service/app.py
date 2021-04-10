@@ -98,6 +98,7 @@ def get_reset_password_token():
         - payload {"email": "<user email>", "reset_token": "<reset token>"}
         - 403 if email not registered
     """
+    # If this doesn't work try request.form['email']
     email = request.args.get('email')
     if email:
         try:
@@ -105,6 +106,29 @@ def get_reset_password_token():
             return jsonify(email=email, reset_token=token), 200
         except ValueError:
             abort(403)
+
+
+@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+def update_password():
+    """ PUT /reset_password
+    Update the password
+
+    Return:
+        - Status code 200
+        - Payload {"email": "<user email>", "message": "Password updated"}
+        - 403 if token is invalid
+    """
+    # If this doesn't work try request.form['email']
+    email = request.args.get('email')
+    # If this doesn't work try request.form['reset_token']
+    reset_token = request.args.get('reset_token')
+    # If this doesn't work try request.form['new_password']
+    password = request.args.get('new_password')
+    try:
+        AUTH.update_password(reset_token, new_password)
+        return jsonify(email=email, message="Password updated"), 200
+    except ValueError:
+        abort(403)
 
 
 if __name__ == "__main__":
