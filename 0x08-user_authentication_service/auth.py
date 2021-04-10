@@ -76,7 +76,7 @@ class Auth:
 
     def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """Returns a str or None"""
-        if session_id is Nonei or type(session_id) is not str:
+        if session_id is None or type(session_id) is not str:
             return None
 
         try:
@@ -94,3 +94,20 @@ class Auth:
             self._db.update_user(user_id, session_id=None)
         except NoResultFound:
             return None
+
+    def get_reset_password_token(self, email: str) -> str:
+        """If user exists, generate a UUID and update the user’s reset_token\
+           database field
+
+           Return:
+                token, raise ValueError if user does not exist
+        """
+        if type(email) is not str:
+            return None
+
+        try:
+            user = self._db.find_user_by(email=email)
+            token = self._generate_uuid()
+            self._db.update_user(user.id, reset_token=token)
+        except NoResultFound:
+            raise ValueError
