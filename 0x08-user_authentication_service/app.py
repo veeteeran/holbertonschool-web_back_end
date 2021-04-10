@@ -60,7 +60,7 @@ def login():
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout():
     """Logout and delete current session"""
-    session_id = request.cookie.get('session_id')
+    session_id = request.cookies.get('session_id')
     if session_id is None:
         return None
 
@@ -68,6 +68,23 @@ def logout():
     if user:
         AUTH.destroy_session(user.id)
         return redirect(url_for('index'))
+    else:
+        abort(403)
+
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile():
+    """ GET /profile
+    Find user if exists
+    Return:
+        - Status code 200
+        - payload {"email": "<user email>"}
+        - 403 if user does not exist or session_id invalid
+    """
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        return jsonify(email=user.email), 200
     else:
         abort(403)
 
