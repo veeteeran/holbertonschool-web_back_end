@@ -18,6 +18,11 @@ def _hash_password(password: str) -> str:
     return str(hashed)
 
 
+def _generate_uuid(self) -> str:
+    """Return a string representation of a new UUID"""
+    return str(uuid4())
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -54,10 +59,6 @@ class Auth:
                 return False
         except NoResultFound:
             return False
-
-    def _generate_uuid(self) -> str:
-        """Return a string representation of a new UUID"""
-        return str(uuid4())
 
     def create_session(self, email: str) -> Union[str, None]:
         """Find the user corresponding to the email, generate a new UUID and\
