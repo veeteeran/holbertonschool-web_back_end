@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """Integration test module for Flask app"""
+from auth import Auth
 import requests
+
+
+AUTH = Auth()
 
 
 def register_user(email: str, password: str) -> None:
     """Test register user route"""
     payload = {'email': email, 'password': password}
     r = requests.post('http://127.0.0.1:5000/users', data=payload)
-    assert r.raise_for_status() is None, f"Status code is {r.status_code}"
+    assert r.status_code == 200
     assert r.json() == {'email': email, "message": "user created"}
 
 
@@ -15,30 +19,32 @@ def log_in_wrong_password(email: str, password: str) -> None:
     """Test login with wrong password"""
     payload = {'email': email, 'password': password}
     r = requests.post('http://127.0.0.1:5000/sessions', data=payload)
-    assert r.status_code == 401, f"Status code is {r.status_code}"
+    assert r.status_code == 401
 
 
 def log_in(email: str, password: str) -> str:
     """Test login with correct password"""
     payload = {'email': email, 'password': password}
     r = requests.post('http://127.0.0.1:5000/sessions', data=payload)
-    assert r.raise_for_status() is None, f"Status code is {r.status_code}"
+    assert r.status_code == 200 
     assert r.json() == {'email': email, "message": "logged in"}
+
+    return r.cookies.get('session_id')
 
 
 def profile_unlogged() -> None:
     """Test /profile route with invalid input"""
-    no_cookie = None
-    fake_cookie = dict(session_id='not-a-real-cookie')
-    r = requests.get('http://127.0.0.1:5000/profile', cookies=no_cookie)
-    f = requests.get('http://127.0.0.1:5000/profile', cookies=fake_cookie)
-    assert r.status_code == 403, f"Status code is {r.status_code}"
-    assert f.status_code == 403, f"Status code is {r.status_code}"
+    r = requests.get('http://127.0.0.1:5000/profile')
+    assert r.status_code == 403
 
 
 def profile_logged(session_id: str) -> None:
     """Test /profile route with valid input"""
-    pass
+    cookies = {'session_id': session_id}
+    r = requests.get('http://127.0.0.1:5000/profile', cookies=cookies)
+    user = AUTH.get_user_from_session_id(session_id)
+    assert r.status_code == 200
+    assert r.json() == {'email': user.email}
 
 
 def log_out(session_id: str) -> None:
@@ -67,8 +73,8 @@ if __name__ == "__main__":
     log_in_wrong_password(EMAIL, NEW_PASSWD)
     profile_unlogged()
     session_id = log_in(EMAIL, PASSWD)
-    '''
     profile_logged(session_id)
+    '''
     log_out(session_id)
     reset_token = reset_password_token(EMAIL)
     update_password(EMAIL, reset_token, NEW_PASSWD)
