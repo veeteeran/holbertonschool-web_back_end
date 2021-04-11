@@ -10,7 +10,7 @@ from uuid import uuid4
 
 def _hash_password(password: str) -> str:
     """Return a salted hash of the input password"""
-    if type(password) is not str:
+    if password is None or type(password) is not str:
         return None
 
     hashed = bcrypt.hashpw(bytes(password, 'utf-8'), bcrypt.gensalt())
@@ -70,7 +70,7 @@ class Auth:
 
         try:
             user = self._db.find_user_by(email=email)
-            self._db.update_user(user.id, session_id=self._generate_uuid())
+            self._db.update_user(user.id, session_id=_generate_uuid())
             return user.session_id
         except NoResultFound:
             return None
@@ -103,12 +103,12 @@ class Auth:
            Return:
                 token, raise ValueError if user does not exist
         """
-        if type(email) is not str:
+        if email is None or type(email) is not str:
             return None
 
         try:
             user = self._db.find_user_by(email=email)
-            token = self._generate_uuid()
+            token = _generate_uuid()
             self._db.update_user(user.id, reset_token=token)
         except NoResultFound:
             raise ValueError
