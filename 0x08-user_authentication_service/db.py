@@ -8,8 +8,9 @@ from user import Base, User
 
 
 class DB:
-
+    """Docstring for DB class"""
     def __init__(self):
+        """Initialize a DB object"""
         self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
@@ -17,6 +18,7 @@ class DB:
 
     @property
     def _session(self):
+        """Create a session"""
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
