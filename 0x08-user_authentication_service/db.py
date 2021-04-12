@@ -13,7 +13,7 @@ class DB:
     """DB Class creates a DB object"""
     def __init__(self):
         """Initializes a DB object"""
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db")
         Base.metadata.create_all(self._engine)
         self.__session = None
 
