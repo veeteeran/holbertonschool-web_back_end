@@ -38,7 +38,8 @@ class Auth:
 
         try:
             user_exists = self._db.find_user_by(email=email)
-            raise ValueError(f"User {email} already exists")
+            if user_exists is not None:
+                raise ValueError(f"User {email} already exists")
         except NoResultFound:
             hashed_password = _hash_password(password)
             return self._db.add_user(email, hashed_password)
@@ -47,13 +48,12 @@ class Auth:
         """Locates user by email. Return True if password matches
         False if not"""
         if type(email) is not str or type(password) is not str:
-            return None
+            return False
 
         try:
             user = self._db.find_user_by(email=email)
             pwd = bytes(password, 'utf-8')
-            hashed_pwd = bytes(user.hashed_password[2:-1], 'utf-8')
-            if bcrypt.checkpw(pwd, hashed_pwd):
+            if bcrypt.checkpw(pwd, user.hashed_password):
                 return True
             else:
                 return False
