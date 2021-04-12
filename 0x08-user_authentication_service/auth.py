@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Auth module"""
+"""Auth module adding more text to docstring"""
 import bcrypt
 from db import DB
 from sqlalchemy.orm.exc import NoResultFound
