@@ -54,4 +54,3 @@ class DB:
                 return None
             else:
                 raise ValueError
-        return None
