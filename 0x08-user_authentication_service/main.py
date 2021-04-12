@@ -61,14 +61,18 @@ def reset_password_token(email: str) -> str:
     r = requests.post('http://127.0.0.1:5000/reset_password', data=payload)
     user = AUTH._db.find_user_by(email=email)
     assert r.status_code == 200
-    assert r.json() == {'email': email, "reset_token": "user.reset_token"}
+    assert r.json() == {'email': email, "reset_token": user.reset_token}
 
     return user.reset_token
 
 
 def update_password(email: str, reset_token: str, new_password: str) -> None:
     """Test /reset_password PUT method, update a password"""
-    pass
+    payload = {"email": email, "reset_token": reset_token,
+               "new_password": new_password}
+    r = request.put('http://127.0.0.1:5000/reset_password', data=payload)
+    assert r.status_code == 200
+    assert r.json() == {'email': email, "message": "Password updated"}
 
 
 EMAIL = "guillaume@holberton.io"
