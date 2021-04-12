@@ -121,13 +121,13 @@ class Auth:
 
            Raise ValueError if token does not exist
         """
-        if type(reset_token) is not str or type(password) is not str:
-            return None
+        if type(reset_token) is str and type(password) is str:
+            try:
+                user = self._db.find_user_by(reset_token=reset_token)
+                hashed_password = _hash_password(password)
+                self._db.update_user(user.id, hashed_password=hashed_password,
+                                     reset_token=None)
+            except NoResultFound:
+                raise ValueError
 
-        try:
-            user = self._db.find_user_by(reset_token=reset_token)
-            hashed_password = _hash_password(password)
-            self._db.update_user(user.id, hashed_password=hashed_password,
-                                 reset_token=None)
-        except NoResultFound:
-            raise ValueError
+        return None
