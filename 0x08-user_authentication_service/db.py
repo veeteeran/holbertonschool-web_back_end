@@ -43,10 +43,9 @@ class DB:
         return session.query(User).filter_by(**kwargs).one()
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """
-            Update the user attributes from kwargs
-        """
+        """Update the user attributes from kwargs"""
         user = self.find_user_by(id=user_id)
+
         for key in kwargs:
             if key not in user.__dir__():
                 raise ValueError
