@@ -19,7 +19,7 @@ def log_in_wrong_password(email: str, password: str) -> None:
     """Test login with wrong password"""
     payload = {'email': email, 'password': password}
     r = requests.post('http://127.0.0.1:5000/sessions', data=payload)
-    assert r.status_code == 401
+    assert r.status_code == 401, f"staus code:{r.status_code}"
 
 
 def log_in(email: str, password: str) -> str:
@@ -49,12 +49,21 @@ def profile_logged(session_id: str) -> None:
 
 def log_out(session_id: str) -> None:
     """Test /sessions route DELETE method"""
-    pass
+    cookies = {'session_id': session_id}
+    r = requests.delete('http://127.0.0.1:5000/sessions', cookies=cookies)
+    assert r.status_code == 200
+    assert r.json() == {"message": "Bienvenue"}
 
 
 def reset_password_token(email: str) -> str:
     """Test /reset_password POST method, creates a password"""
-    pass
+    payload = {'email': email}
+    r = requests.post('http://127.0.0.1:5000/reset_password', data=payload)
+    user = AUTH._db.find_user_by(email=email)
+    assert r.status_code == 200
+    assert r.json() == {'email': email, "reset_token": "user.reset_token"}
+
+    return user.reset_token
 
 
 def update_password(email: str, reset_token: str, new_password: str) -> None:
@@ -74,9 +83,10 @@ if __name__ == "__main__":
     profile_unlogged()
     session_id = log_in(EMAIL, PASSWD)
     profile_logged(session_id)
-    '''
     log_out(session_id)
     reset_token = reset_password_token(EMAIL)
+    print(reset_token)
+    '''
     update_password(EMAIL, reset_token, NEW_PASSWD)
     log_in(EMAIL, NEW_PASSWD)
     '''
