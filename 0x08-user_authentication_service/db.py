@@ -42,7 +42,7 @@ class DB:
 
         return session.query(User).filter_by(**kwargs).one()
 
-    def update_user(self, user_id: int, **kwargs: str) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """
             Update the user attributes from kwargs
         """
