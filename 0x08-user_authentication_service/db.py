@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""DB Class module"""
 from sqlalchemy import create_engine
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,16 +9,14 @@ from user import User, Base
 
 
 class DB:
-    """DB Class creates a DB object"""
+
     def __init__(self):
-        """Initializes a DB object"""
         self._engine = create_engine("sqlite:///a.db")
         Base.metadata.create_all(self._engine)
         self.__session = None
 
     @property
     def _session(self):
-        """Returns a DB session"""
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
