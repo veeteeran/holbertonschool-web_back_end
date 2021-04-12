@@ -26,7 +26,7 @@ def log_in(email: str, password: str) -> str:
     """Test login with correct password"""
     payload = {'email': email, 'password': password}
     r = requests.post('http://127.0.0.1:5000/sessions', data=payload)
-    assert r.status_code == 200 
+    assert r.status_code == 200
     assert r.json() == {'email': email, "message": "logged in"}
 
     return r.cookies.get('session_id')
