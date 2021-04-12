@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Auth module adding more text to docstring"""
+"""Auth module"""
 import bcrypt
 from db import DB
 from sqlalchemy.orm.exc import NoResultFound
@@ -13,7 +13,7 @@ def _hash_password(password: str) -> str:
     if password is None or type(password) is not str:
         return None
 
-    hashed = bcrypt.hashpw(bytes(password, 'utf-8'), bcrypt.gensalt())
+    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
     return str(hashed)
 
