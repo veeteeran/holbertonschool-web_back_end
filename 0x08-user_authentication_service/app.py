@@ -32,9 +32,9 @@ def users():
     password = request.form.get('password')
     try:
         AUTH.register_user(email, password)
-        return jsonify({"email": email, "message": "user created"})
+        return jsonify(email=email, message="user created")
     except ValueError:
-        return jsonify({"message": "email already registered"}), 400
+        return jsonify(message="email already registered"), 400
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
@@ -63,7 +63,7 @@ def logout():
     """Logout and delete current session"""
     session_id = request.cookies.get('session_id')
     if session_id is None:
-        return None
+        abort(403)
 
     user = AUTH.get_user_from_session_id(session_id)
     if user:
