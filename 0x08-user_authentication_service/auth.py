@@ -15,7 +15,7 @@ def _hash_password(password: str) -> str:
 
     hashed = hashpw(password.encode(), gensalt())
 
-    return str(hashed)
+    return hashed
 
 
 def _generate_uuid() -> str:
