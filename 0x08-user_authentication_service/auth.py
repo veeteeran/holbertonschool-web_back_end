@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Auth module"""
-import bcrypt
+from bcrypt import hashpw, gensalt
 from db import DB
 from sqlalchemy.orm.exc import NoResultFound
 from typing import Union
@@ -13,7 +13,7 @@ def _hash_password(password: str) -> str:
     if password is None or type(password) is not str:
         return None
 
-    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    hashed = hashpw(password.encode(), gensalt())
 
     return str(hashed)
 
