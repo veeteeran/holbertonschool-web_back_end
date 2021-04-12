@@ -48,10 +48,9 @@ class DB:
         """
         user = self.find_user_by(id=user_id)
         for k, v in kwargs.items():
-            if k in user.__dir__():
-                setattr(user, k, v)
-            else:
+            if k not in user.__dir__():
                 raise ValueError
+            setattr(user, k, v)
 
         self._session.commit()
         return None
