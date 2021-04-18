@@ -83,11 +83,13 @@ class TestGitHubOrgClient(unittest.TestCase):
         with self.assertRaises(AssertionError):
             test_object.has_license(repo, None)
 
+
 '''
 mock get_json since public_repos calls repos_payload which calls get_json
 '''
 '''
-@parameterized_class("org_payload", "repos_payload", "expected_repos", "apache2_repos")
+@parameterized_class("org_payload", "repos_payload", "expected_repos",
+                     "apache2_repos")
 class TestIntegrationGitHubOrgClient(unittest.TestCase):
     """GitHubOrgClient.public_repos integration tests"""
     def get_names():
