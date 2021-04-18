@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Module for client.py unit tests"""
 from client import GitHubOrgClient
+from fixtures import TEST_PAYLOAD
 import json
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 import requests
 import unittest
 from unittest.mock import patch, PropertyMock
@@ -21,7 +22,9 @@ class TestGitHubOrgClient(unittest.TestCase):
         arg = test_obj.ORG_URL.format(org=org_name)
         url = f"https://api.github.com/orgs/{org_name}"
         self.assertEqual(arg, url)
-        test_obj.org
+
+        mock_get_json.return_value = {'key': 'value'}
+        self.assertEqual(test_obj.org, {'key': 'value'})
         mock_get_json.assert_called_once()
 
     def test_public_repos_url(self):
@@ -79,3 +82,27 @@ class TestGitHubOrgClient(unittest.TestCase):
 
         with self.assertRaises(AssertionError):
             test_object.has_license(repo, None)
+
+'''
+mock get_json since public_repos calls repos_payload which calls get_json
+'''
+'''
+@parameterized_class("org_payload", "repos_payload", "expected_repos", "apache2_repos")
+class TestIntegrationGitHubOrgClient(unittest.TestCase):
+    """GitHubOrgClient.public_repos integration tests"""
+    def get_names():
+        """get names from fixtures.py"""
+        names = [data.get("name") for data in TEST_PAYLOAD[0][1]]
+        return names
+
+    @classmethod
+    def setUpClass(cls):
+        """mock request.get to return example payloads found in the fixtures"""
+        with patch('requests.get') as get_patcher:
+            get_patcher.side_effect = TEST_PAYLOAD
+
+    @classmethod
+    def tearDownClass(cls):
+        """Stops the patcher"""
+        pass
+'''
