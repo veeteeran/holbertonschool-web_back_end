@@ -22,9 +22,12 @@ class TestGitHubOrgClient(unittest.TestCase):
         arg = test_obj.ORG_URL.format(org=org_name)
         url = f"https://api.github.com/orgs/{org_name}"
         self.assertEqual(arg, url)
-
+        '''
         mock_get_json.return_value = {'key': 'value'}
-        self.assertEqual(test_obj.org, {'key': 'value'})
+        response = test_obj.org()
+        self.assertEqual(response, {'key': 'value'})
+        '''
+        test_obj.org()
         mock_get_json.assert_called_once_with(url)
 
     def test_public_repos_url(self):
