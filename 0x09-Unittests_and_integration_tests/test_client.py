@@ -31,7 +31,7 @@ class TestGithubOrgClient(unittest.TestCase):
             test_obj = GithubOrgClient('foo')
             self.assertEqual(test_obj._public_repos_url,
                              "https://fake_url.com")
-    '''
+
     @patch('client.get_json')
     def test_public_repos(self, mock_get_json):
         """public_repos unit test
@@ -69,9 +69,6 @@ class TestGithubOrgClient(unittest.TestCase):
         with self.assertRaises(AssertionError):
             test_object.has_license(repo, None)
 
-    '''
-
-
 '''
 mock get_json since public_repos calls repos_payload which calls get_json
 '''
@@ -94,5 +91,5 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """Stops the patcher"""
-        pass
+        print("Does nothing")
 '''
