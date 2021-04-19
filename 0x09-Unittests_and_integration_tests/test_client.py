@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch, PropertyMock
 
 
-class TestGitHubOrgClient(unittest.TestCase):
+class TestGithubOrgClient(unittest.TestCase):
     """GitHubOrgClient unit tests"""
     @parameterized.expand([
         'google',
@@ -37,10 +37,12 @@ class TestGitHubOrgClient(unittest.TestCase):
         '''
         with patch('client.GitHubOrgClient.org',
                    new_callable=PropertyMock) as mock_org:
-            mock_org.return_value = "https://api.github.com/orgs/google/repos"
-            myClass = GitHubOrgClient('google')
-            p = PropertyMock(return_value=mock_org.return_value)
-            GitHubOrgClient._public_repos_url = p
+            #mock_org.return_value = {"repos_url": "https://fake_url.com"}
+            myClass = GitHubOrgClient('foo')
+            #p = PropertyMock(return_value=mock_org.return_value)
+            p = PropertyMock(return_value={"repos_url": "https://fake_url.com"})
+            #myClass._public_repos_url().return_value = p
+            GitHubOrgClient._public_repos_url.org.return_value = {"repos_url": "https://fake_url.com"}
             self.assertEqual(myClass._public_repos_url, mock_org.return_value)
 
     @patch('client.get_json')
