@@ -69,6 +69,7 @@ class TestGithubOrgClient(unittest.TestCase):
         with self.assertRaises(AssertionError):
             test_object.has_license(repo, None)
 
+
 '''
 mock get_json since public_repos calls repos_payload which calls get_json
 '''
