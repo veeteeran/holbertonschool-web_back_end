@@ -2,9 +2,7 @@
 """Module for client.py unit tests"""
 from client import GithubOrgClient
 from fixtures import TEST_PAYLOAD
-import json
 from parameterized import parameterized, parameterized_class
-import requests
 import unittest
 from unittest.mock import patch, PropertyMock
 
@@ -33,7 +31,7 @@ class TestGithubOrgClient(unittest.TestCase):
             test_obj = GithubOrgClient('foo')
             self.assertEqual(test_obj._public_repos_url,
                              "https://fake_url.com")
-
+    '''
     @patch('client.get_json')
     def test_public_repos(self, mock_get_json):
         """public_repos unit test
@@ -71,6 +69,8 @@ class TestGithubOrgClient(unittest.TestCase):
         with self.assertRaises(AssertionError):
             test_object.has_license(repo, None)
 
+    '''
+
 
 '''
 mock get_json since public_repos calls repos_payload which calls get_json
@@ -78,8 +78,8 @@ mock get_json since public_repos calls repos_payload which calls get_json
 '''
 @parameterized_class("org_payload", "repos_payload", "expected_repos",
                      "apache2_repos")
-class TestIntegrationGitHubOrgClient(unittest.TestCase):
-    """GitHubOrgClient.public_repos integration tests"""
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """GithubOrgClient.public_repos integration tests"""
     def get_names():
         """get names from fixtures.py"""
         names = [data.get("name") for data in TEST_PAYLOAD[0][1]]
