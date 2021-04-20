@@ -73,24 +73,24 @@ class TestGithubOrgClient(unittest.TestCase):
 '''
 mock get_json since public_repos calls repos_payload which calls get_json
 '''
-'''
-@parameterized_class("org_payload", "repos_payload", "expected_repos",
-                     "apache2_repos")
+@parameterized_class([{"org_payload": TEST_PAYLOAD[0][0],
+                      "repos_payload": TEST_PAYLOAD[0][1],
+                      "expected_repos": TEST_PAYLOAD[0][2],
+                      "apache2_repos": TEST_PAYLOAD[0][3]}])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """GithubOrgClient.public_repos integration tests"""
-    def get_names():
-        """get names from fixtures.py"""
-        names = [data.get("name") for data in TEST_PAYLOAD[0][1]]
-        return names
-
     @classmethod
     def setUpClass(cls):
         """mock request.get to return example payloads found in the fixtures"""
-        with patch('requests.get') as get_patcher:
-            get_patcher.side_effect = TEST_PAYLOAD
+        cls.get_patcher = patch('requests.get')
+        cls.get_patcher.side_effect = cls.repos_payload
+        '''
+        cls.org_patcher = patch('client.GithubOrgClient.org')
+        cls.org_patcher.side_effect = cls.org_payload
+        '''
+        cls.get_patcher.start()
 
     @classmethod
     def tearDownClass(cls):
         """Stops the patcher"""
-        print("Does nothing")
-'''
+        cls.get_patcher.stop()
