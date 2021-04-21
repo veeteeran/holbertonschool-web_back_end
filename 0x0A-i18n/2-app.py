@@ -1,12 +1,21 @@
 #!/usr/bin/env python3
 """Module of routes for task 0x0A"""
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, gettext
 
 app = Flask(__name__)
 babel = Babel(app)
-Babel.default_locale = "en"
-Babel.default_timezone = "UTC"
+
+
+
+class Config(object):
+    """Config class to setup Babel for English and French"""
+    LANGUAGES = ["en", "fr"]
+    Babel.default_locale = "en"
+    Babel.default_timezone = "UTC"
+
+
+app.config.from_object(Config)
 
 
 @app.route('/')
@@ -16,21 +25,11 @@ def index():
                            title='Welcome to Holberton',
                            header='Hello world')
 
-class Config(object):
-    """Config class to setup Babel for English and French"""
-    LANGUAGES = ["en", "fr"]
 
-    @babel.localeselector
-    def get_locale(self):
-        """Get user locale"""
-        return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-    '''
-    @babel.timezoneselector
-    def default_timezone(self):
-        """Config default locale to UTC"""
-        return app.config['BABEL_DEFAULT_TIMEZONE'] = "UTC"
-    '''
+@babel.localeselector
+def get_locale():
+    """Get user locale"""
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 if __name__ == "__main__":
