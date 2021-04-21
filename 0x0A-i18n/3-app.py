@@ -5,8 +5,9 @@ from flask_babel import Babel
 from gettext import gettext
 
 app = Flask(__name__)
-app.config = Config()
 babel = Babel(app)
+Babel.default_locale = "en"
+Babel.default_timezone = "UTC"
 _ = gettext
 
 
@@ -20,8 +21,6 @@ def index():
 class Config(object):
     """Config class to setup Babel for English and French"""
     LANGUAGES = ["en", "fr"]
-    babel.default_locale = "en"
-    babel.default_timezone = "UTC"
 
     @babel.localeselector
     def get_locale(self):
@@ -34,3 +33,9 @@ class Config(object):
         """Config default locale to UTC"""
         return app.config['BABEL_DEFAULT_TIMEZONE'] = "UTC"
     '''
+
+
+if __name__ == "__main__":
+    host = "0.0.0.0"
+    port = "5000"
+    app.run(host=host, port=port, debug=True)
