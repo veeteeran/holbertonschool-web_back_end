@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Module of routes for task 0x0A"""
-from flask import Flask, render_templatei, requests
+from flask import Flask, render_template, requests
 from flask_babel import Babel
 
 app = Flask(__name__)
