@@ -2,7 +2,8 @@
 """Module of routes for task 0x0A"""
 from flask import Flask, g, render_template, request
 from flask_babel import Babel
-from pytz import timezone, UnknownTimeZoneError
+from pytz import timezone
+from pytz.exceptions UnknownTimeZoneError
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -27,8 +28,8 @@ app.config.from_object(Config)
 
 @app.route('/')
 def index():
-    """Template for 6-index with title and header"""
-    return render_template('6-index.html')
+    """Template for 7-index with title and header"""
+    return render_template('7-index.html')
 
 
 @babel.localeselector
@@ -68,7 +69,7 @@ def before_request():
 @babel.timezoneselector
 def get_timezone():
     """get_timezone returns user timezone"""
-    timezone = request.get('timezone')
+    timezone = request.args.get('timezone')
     if timezone:
         try:
             return timezone(timezone)
@@ -76,7 +77,7 @@ def get_timezone():
             pass
 
     if g.user:
-        timezone = request.get('timezone')
+        timezone = request.args.get('timezone')
         if timezone:
             try:
                 return timezone(timezone)
