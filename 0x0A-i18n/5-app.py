@@ -52,7 +52,7 @@ def get_user():
 @app.before_request
 def before_request():
     """find a user if any, and set it as a global"""
-    g.user = get_user(user_id)
+    g.user = get_user()
 
 
 if __name__ == "__main__":
