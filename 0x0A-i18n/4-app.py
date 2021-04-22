@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Module of routes for task 0x0A"""
 from flask import Flask, g, render_template, request
-from flask_babel import Babel, gettext
+from flask_babel import Babel
+
 
 app = Flask(__name__)
 babel = Babel(app)
-
 
 
 class Config(object):
@@ -21,9 +21,7 @@ app.config.from_object(Config)
 @app.route('/')
 def index():
     """Template for 4-index with title and header"""
-    return render_template('4-index.html',
-                           home_title=gettext(u'home_title'),
-                           home_header=gettext(u'home_header'))
+    return render_template('4-index.html')
 
 
 @babel.localeselector
