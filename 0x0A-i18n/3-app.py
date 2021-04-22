@@ -2,6 +2,8 @@
 """Module of routes for task 0x0A"""
 from flask import Flask, render_template, request
 from flask_babel import Babel
+from typing import Text
+
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -18,13 +20,13 @@ app.config.from_object(Config)
 
 
 @app.route('/')
-def index():
+def index() -> Text:
     """Template for 3-index with title and header"""
     return render_template('3-index.html')
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """Get user locale"""
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
