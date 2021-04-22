@@ -40,18 +40,18 @@ def get_locale():
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-def get_user(user_id):
+def get_user():
     """get_user returns a user dictionary or None"""
-    return users.get(user_id)
+    user_id = request.args.get('login_as')
+    if user_id:
+        return users.get((int)user_id)
+
+    return None
 
 
 @app.before_request
 def before_request():
     """find a user if any, and set it as a global"""
-    user_id = request.args.get('login_as')
-    if user_id:
-        user_id = int(user_id)
-
     g.user = get_user(user_id)
 
 
