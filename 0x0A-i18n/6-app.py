@@ -62,7 +62,7 @@ def get_user():
 def before_request():
     """find a user if any, and set it as a global"""
     g.user = get_user()
- 
+
 
 if __name__ == "__main__":
     host = "0.0.0.0"
