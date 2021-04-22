@@ -7,9 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Template for 0-index with title and header"""
-    return render_template('0-index.html',
-                           title='Welcome to Holberton',
-                           header='Hello world')
+    return render_template('0-index.html')
 
 
 if __name__ == "__main__":
