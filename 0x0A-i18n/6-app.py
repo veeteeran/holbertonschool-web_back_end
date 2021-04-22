@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Module of routes for task 0x0A"""
 from flask import Flask, g, render_template, request
-from flask_babel import Babel, gettext
+from flask_babel import Babel
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -62,7 +62,7 @@ def get_user():
 def before_request():
     """find a user if any, and set it as a global"""
     g.user = get_user()
-    
+ 
 
 if __name__ == "__main__":
     host = "0.0.0.0"
