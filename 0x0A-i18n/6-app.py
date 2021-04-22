@@ -26,51 +26,42 @@ app.config.from_object(Config)
 
 @app.route('/')
 def index():
-    """Template for 5-index with title and header"""
-    logged_in_as = None
-    if g.user:
-        logged_in_as = gettext(u'logged_in_as', username=g.user.get('name'))
-
-    return render_template('6-index.html',
-                           home_title=gettext(u'home_title'),
-                           home_header=gettext(u'home_header'),
-                           logged_in_as=logged_in_as,
-                           not_logged_in=gettext(u'not_logged_in'))
+    """Template for 6-index with title and header"""
+    return render_template('6-index.html')
 
 
 @babel.localeselector
 def get_locale():
     """Get user locale"""
     locale = request.args.get('locale')
-    if locale in Config.LANGUAGES:
+    if locale and locale in app.config['LANGUAGES']:
         return locale
 
     if g.user:
         locale = g.user.get('locale')
-        if locale in Config.LANGUAGES:
+        if locale and locale in app.config['LANGUAGES']:
             return locale
-        else:
-            return 'fr'
 
-    if request.headers.get('Accept-Language'):
-        return request.headers.get('Accept-Language')[:2]
+    accepted = request.headers.get('Accept-Language')
+    if accepted and accepted in app.config['LANGUAGES']:
+        return accepted
 
-    return Babel.default_locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-def get_user(user_id):
+def get_user():
     """get_user returns a user dictionary or None"""
-    return users.get(user_id)
+    user_id = request.args.get('login_as')
+    if user_id:
+        return users.get(int(user_id))
+
+    return None
 
 
 @app.before_request
 def before_request():
     """find a user if any, and set it as a global"""
-    user_id = request.args.get('login_as')
-    if user_id:
-        user_id = int(user_id)
-
-    g.user = get_user(user_id)
+    g.user = get_user()
     
 
 if __name__ == "__main__":
