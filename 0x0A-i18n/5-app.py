@@ -27,22 +27,14 @@ app.config.from_object(Config)
 @app.route('/')
 def index():
     """Template for 5-index with title and header"""
-    logged_in_as = None
-    if g.user:
-        logged_in_as = gettext(u"logged_in_as", username=g.user.get('name'))
-
-    return render_template('5-index.html',
-                           home_title=gettext(u'home_title'),
-                           home_header=gettext(u'home_header'),
-                           logged_in_as=logged_in_as,
-                           not_logged_in=gettext(u"not_logged_in"))
+    return render_template('5-index.html')
 
 
 @babel.localeselector
 def get_locale():
     """Get user locale"""
     locale = request.args.get('locale')
-    if locale in Config.LANGUAGES:
+    if locale and locale in Config.LANGUAGES:
         return locale
 
     return request.accept_languages.best_match(app.config['LANGUAGES'])
@@ -61,7 +53,7 @@ def before_request():
         user_id = int(user_id)
 
     g.user = get_user(user_id)
-    
+
 
 if __name__ == "__main__":
     host = "0.0.0.0"
