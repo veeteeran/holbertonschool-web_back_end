@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Module of routes for task 0x0A"""
-from datetime import datetime
 from flask import Flask, g, render_template, request
-from flask_babel import Babel, gettext
-from pytz import timezone, UnknownTimeZoneError, utc
+from flask_babel import Babel
+from pytz import timezone, UnknownTimeZoneError
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -29,20 +28,7 @@ app.config.from_object(Config)
 @app.route('/')
 def index():
     """Template for 5-index with title and header"""
-    logged_in_as = None
-    if g.user:
-        logged_in_as = gettext(u'logged_in_as', username=g.user.get('name'))
-
-    now = datetime.now()
-    timezone = get_timezone()
-    loc_dt = timezone.localize(now)
-    current_time_is = gettext(u'current_time_is', current_time=loc_dt)
-    return render_template('index.html',
-                           home_title=gettext(u'home_title'),
-                           home_header=gettext(u'home_header'),
-                           logged_in_as=logged_in_as,
-                           not_logged_in=gettext(u'not_logged_in'),
-                           current_time_is=current_time_is)
+    return render_template('index.html')
                            
 
 
