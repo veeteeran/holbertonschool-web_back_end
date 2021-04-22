@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Module of routes for task 0x0A"""
-from flask import Flask, g, render_template, request
+from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
@@ -11,8 +11,8 @@ babel = Babel(app)
 class Config(object):
     """Config class to setup Babel for English and French"""
     LANGUAGES = ["en", "fr"]
-    Babel.default_locale = "en"
-    Babel.default_timezone = "UTC"
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
 app.config.from_object(Config)
@@ -28,7 +28,7 @@ def index():
 def get_locale():
     """Get user locale"""
     locale = request.args.get('locale')
-    if locale in Config.LANGUAGES:
+    if locale and locale in Config.LANGUAGES:
         return locale
 
     return request.accept_languages.best_match(app.config['LANGUAGES'])
