@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Module of routes for task 0x0A"""
+from datetime import datetime
 from flask import Flask, g, render_template, request
-from flask_babel import Babel
-from pytz import timezone, UnknownTimeZoneError
+from flask_babel import Babel, format_datetime
+from pytz import timezone
+from pytz.exceptions import UnknownTimeZoneError
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -27,49 +29,48 @@ app.config.from_object(Config)
 
 @app.route('/')
 def index():
-    """Template for 5-index with title and header"""
-    return render_template('index.html')
-                           
+    """Template for index with title and header"""
+    time_now = format_datetime(datetime.now())
+    return render_template('index.html', time_now=time_now)
 
 
 @babel.localeselector
 def get_locale():
     """Get user locale"""
     locale = request.args.get('locale')
-    if locale in Config.LANGUAGES:
+    if locale and locale in app.config['LANGUAGES']:
         return locale
 
     if g.user:
         locale = g.user.get('locale')
-        if locale in Config.LANGUAGES:
+        if locale and locale in app.config['LANGUAGES']:
             return locale
-        else:
-            return 'fr'
 
-    if request.headers.get('Accept-Language'):
-        return request.headers.get('Accept-Language')[:2]
+    accepted = request.headers.get('Accept-Language')
+    if accepted and accepted in app.config['LANGUAGES']:
+        return accepted
 
-    return Babel.default_locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-def get_user(user_id):
+def get_user():
     """get_user returns a user dictionary or None"""
-    return users.get(user_id)
+    user_id = request.args.get('login_as')
+    if user_id:
+        return users.get(int(user_id))
+
+    return None
 
 
 @app.before_request
 def before_request():
     """find a user if any, and set it as a global"""
-    user_id = request.args.get('login_as')
-    if user_id:
-        user_id = int(user_id)
+    g.user = get_user()
 
-    g.user = get_user(user_id)
-    
 
 @babel.timezoneselector
 def get_timezone():
-    """get user timezone"""
+    """get_timezone returns user timezone"""
     timezone = request.args.get('timezone')
     if timezone:
         try:
@@ -78,15 +79,14 @@ def get_timezone():
             pass
 
     if g.user:
-        user_time = g.user.get('timezone')
-        if user_time:
+        timezone = g.user.get('timezone')
+        if timezone:
             try:
-                return timezone(user_time)
+                return timezone(timezone)
             except UnknownTimeZoneError:
                 pass
 
-    
-    return timezone(Babel.default_timezone)
+    return Babel.default_timezone
 
 
 if __name__ == "__main__":
