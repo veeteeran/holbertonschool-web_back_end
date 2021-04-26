@@ -20,6 +20,7 @@ def call_history(method):
     """Decorator to store the history of inputs and outputs for a function"""
     inputs = method.__qualname__ + ":inputs"
     outputs = method.__qualname__ + ":outputs"
+
     @wraps(method)
     def call_history_wrapper(self, args):
         """Stores the history of inputs and outputs for a function"""
@@ -30,6 +31,7 @@ def call_history(method):
         return out
 
     return call_history_wrapper
+
 
 class Cache():
     """Redis cache object"""
