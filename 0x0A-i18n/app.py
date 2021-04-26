@@ -3,8 +3,7 @@
 from datetime import datetime
 from flask import Flask, g, render_template, request
 from flask_babel import Babel, format_datetime
-from pytz import timezone
-from pytz.exceptions import UnknownTimeZoneError
+from pytz import timezone, UnknownTimeZoneError
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -71,18 +70,20 @@ def before_request():
 @babel.timezoneselector
 def get_timezone():
     """get_timezone returns user timezone"""
-    timezone = request.args.get('timezone')
-    if timezone:
+    tz = request.args.get('timezone')
+    if tz:
         try:
-            return timezone(timezone)
+            timezone(tz)
+            return tz
         except UnknownTimeZoneError:
             pass
 
     if g.user:
-        timezone = g.user.get('timezone')
-        if timezone:
+        tz = g.user.get('timezone')
+        if tz:
             try:
-                return timezone(timezone)
+                timezone(tz)
+                return tz
             except UnknownTimeZoneError:
                 pass
 
