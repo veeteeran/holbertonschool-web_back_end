@@ -17,3 +17,11 @@ class Cache():
         key = str(uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None):
+        """get data based on key, return data as specified type based on fn"""
+        if fn:
+            value = self._redis.get(key)
+            return fn(value)
+
+        return self._redis.get(key)
