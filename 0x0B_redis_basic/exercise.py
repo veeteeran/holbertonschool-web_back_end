@@ -25,3 +25,11 @@ class Cache():
             return fn(value)
 
         return self._redis.get(key)
+
+    def get_str(self, key: str) -> str:
+        """Typecast the key to a str"""
+        return self.get(key, str)
+
+    def get_int(self, key: str) -> int:
+        """Typecast the key to an int"""
+        return self.get(key, int)
