@@ -18,7 +18,8 @@ class Cache():
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None):
+    def get(self, key: str,
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """get data based on key, return data as specified type based on fn"""
         if fn:
             value = self._redis.get(key)
