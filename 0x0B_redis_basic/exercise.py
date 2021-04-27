@@ -45,7 +45,7 @@ class Cache():
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Generate random uuid key, store data in key, return key"""
         key = str(uuid4())
-        self._redis.set(key, data)
+        self._redis.mset({key: data})
         return key
 
     def get(self, key: str, fn: Optional[Callable] = None):
