@@ -14,7 +14,7 @@ def count_calls(method: Callable) -> Callable:
     @wraps(method)
     def count_calls_wrapper(*args) -> str:
         """Counts number of calls wrapped function makes"""
-        key = f"count:{args}"
+        key = f"count:{args[0]}"
         cache.incr(key)
         cache.setex('count', 10, cache.get(key))
         return method(*args)
