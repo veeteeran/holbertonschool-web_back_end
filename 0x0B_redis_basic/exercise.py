@@ -11,7 +11,7 @@ def count_calls(method: Callable) -> Callable:
     @wraps(method)
     def count_calls_wrapper(self, *args) -> bytes:
         """Counts number of calls wrapped function makes"""
-        self._redis.incr(count_calls_wrapper.__qualname__)
+        self._redis.incr(method.__qualname__)
         return method(self, *args)
 
     return count_calls_wrapper
