@@ -41,7 +41,8 @@ class Cache():
         self._redis.flushdb()
 
     @call_history
-    def store(self, data: Union[bytes, float, int, str]) -> str:
+    @count_calls
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """Generate random uuid key, store data in key, return key"""
         key = str(uuid4())
         self._redis.set(key, data)
