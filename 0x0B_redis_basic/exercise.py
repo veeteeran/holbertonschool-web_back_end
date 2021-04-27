@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Redis tasks"""
+"""Redis Cache module"""
 from functools import wraps
 import redis
 from typing import Callable, Optional, Union
