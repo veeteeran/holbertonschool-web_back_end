@@ -6,7 +6,7 @@ BEGIN
 	SET @average = (
 		SELECT AVG(score) 
 		FROM corrections 
-		WHERE user_id = user_id);
+		WHERE corrections.user_id = user_id);
 
 	UPDATE users
 	SET average_score = @average
