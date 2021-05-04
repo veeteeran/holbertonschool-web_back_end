@@ -18,10 +18,10 @@ if __name__ == "__main__":
     nl = '\n'
 
     print(f"{total} logs{nl}\
-    Methods:{nl}\
-    \tmethod GET: {get}{nl}\
-    \tmethod POST: {post}{nl}\
-    \tmethod PUT: {put}{nl}\
-    \tmethod PATCH: {patch}{nl}\
-    \tmethod DELETE: {delete}{nl}\
+Methods:{nl}\
+\tmethod GET: {get}{nl}\
+\tmethod POST: {post}{nl}\
+\tmethod PUT: {put}{nl}\
+\tmethod PATCH: {patch}{nl}\
+\tmethod DELETE: {delete}{nl}\
 {status} status check")
