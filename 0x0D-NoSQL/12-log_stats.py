@@ -18,9 +18,9 @@ nl = '\n'
 
 print(f"{total} logs{nl}\
 Methods:{nl}\
-    method GET: {get}{nl}\
-    method POST: {post}{nl}\
-    method PUT: {put}{nl}\
-    method PATCH: {patch}{nl}\
-    method DELETE: {delete}{nl}\
+\tmethod GET: {get}{nl}\
+\tmethod POST: {post}{nl}\
+\tmethod PUT: {put}{nl}\
+\tmethod PATCH: {patch}{nl}\
+\tmethod DELETE: {delete}{nl}\
 {status} status check")
