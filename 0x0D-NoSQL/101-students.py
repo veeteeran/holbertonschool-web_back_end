@@ -4,12 +4,12 @@
 
 def top_students(mongo_collection):
     """Returns all students sorted by average score"""
-    average_grades = mongo_collection.aggregate([
+    average_score = mongo_collection.aggregate([
         {'$unwind': {'path': '$topics'}},
         {'$group': {'_id': '$_id',
                     'name': {'$first': '$name'},
-                    'avgerageScore': {'$avg': '$topics.score'}}},
-        {'$sort': {'avgerageScore': -1}}
+                    'averageScore': {'$avg': '$topics.score'}}},
+        {'$sort': {'averageScore': -1}}
     ])
 
-    return average_grades
+    return average_score
