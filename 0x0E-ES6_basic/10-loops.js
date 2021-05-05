@@ -1,10 +1,11 @@
 #!/usr/bin/node
 const appendToEachArrayValue = (array, appendString) => {
-    for (value of array) {
-      value = appendString + value;
-    }
-  
-    return array;
-}
-  
+  for (const element of array) {
+    array.shift();
+    array.push(`${appendString}${element}`);
+  }
+
+  return array;
+};
+
 export default appendToEachArrayValue;
