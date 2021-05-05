@@ -1,11 +1,12 @@
 #!/usr/bin/node
 const createIteratorObject = (report) => {
-    let arr = [];
-    for (let key in report) {
-        arr.push(...report[key]);
-    }
+  const { allEmployees } = report;
+  const arr = [];
 
-    return arr;
-}
+  for (const key in allEmployees) {
+    arr.push(...allEmployees[key]);
+  }
+  return arr;
+};
 
-export default createIteratorObject
+export default createIteratorObject;
