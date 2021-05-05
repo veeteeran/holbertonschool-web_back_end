@@ -8,8 +8,8 @@ def top_students(mongo_collection):
         {'$unwind': {'path': '$topics'}},
         {'$group': {'_id': '$_id',
                     'name': {'$first': '$name'},
-                    'avgScore': {'$avg': '$topics.score'}}},
-        {'$sort': {'avgScore': -1}}
+                    'avgerageScore': {'$avg': '$topics.score'}}},
+        {'$sort': {'avgerageScore': -1}}
     ])
 
     return average_grades
