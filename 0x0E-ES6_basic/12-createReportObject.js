@@ -1,9 +1,8 @@
 #!/usr/bin/node
-const createReportObject = employeesList => {
-    const returnObj = {
-        allEmployees: [...employeesList],
-        getNumberOfDepartments: 0,
-    }
+const createReportObject = (employeesList) => {
+  const allEmployees = employeesList;
+  const getNumberOfDepartments = (obj) => Object.keys(obj).length;
+  return { allEmployees, getNumberOfDepartments };
+};
 
-    return (returnObj);
-}
+export default createReportObject;
