@@ -1,5 +1,5 @@
 #!/usr/bin/node
-const taskBlock = trueOrFalse => {
+const taskBlock = (trueOrFalse) => {
   const task = false;
   const task2 = true;
 
@@ -10,5 +10,5 @@ const taskBlock = trueOrFalse => {
 
   return [task, task2];
 };
-  
+
 export default taskBlock;
