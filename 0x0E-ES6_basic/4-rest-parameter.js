@@ -1,4 +1,4 @@
 #!/usr/bin/node
-const returnHowManyArguments = (...theArgs) => theArgs.length;
+const returnHowManyArguments = (...args) => args.length;
 
 export default returnHowManyArguments;
