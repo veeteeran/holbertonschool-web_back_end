@@ -10,5 +10,5 @@ export default function handleProfileSignup() {
       messages[1].firstName,
       messages[1].lastName,
     ))
-    .catch(console.log('Signup system offline'));
+  .catch(() => console.log("Signup system offline"))
 }
