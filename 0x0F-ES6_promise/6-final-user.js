@@ -11,8 +11,18 @@ export default function handleProfileSignup(
 
   return Promise.allSettled(promises)
     .then((values) => {
+      const arr = [];
       values.forEach(value => {
-        console.log(value)
-      }
-    )});
+        if (value.status === "fulfilled") {
+          arr.push(value);
+        } else {
+          arr.push({
+            'status': value.status,
+            'value': value.reason
+          })
+        }
+      })
+        return arr;
+    }
+  );
 }
