@@ -1,5 +1,3 @@
-import Currency from './3-currency';
-
 class Pricing {
   constructor(amount, currency) {
     this._amount = amount;
@@ -23,7 +21,7 @@ class Pricing {
   }
 
   displayFullPrice() {
-    return `${this.amount} ${this.currency.name} (${this.currency.name})`
+    return `${this.amount} ${this.currency.name} (${this.currency.name})`;
   }
 
   static convertPrice(amount, conversionRate) {
