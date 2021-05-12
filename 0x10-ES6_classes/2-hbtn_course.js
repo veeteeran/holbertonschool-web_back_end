@@ -20,7 +20,7 @@ class HolbertonCourse {
     return this._name;
   }
 
-  set changeName(newName) {
+  set name(newName) {
     this._name = newName;
   }
 
@@ -28,7 +28,7 @@ class HolbertonCourse {
     return this._length;
   }
 
-  set changeLength(newLength) {
+  set length(newLength) {
     this._length = newLength
   }
 
@@ -36,7 +36,7 @@ class HolbertonCourse {
     return this._students;
   }
 
-  set changeStudents(newStudent) {
+  set students(newStudent) {
     this._students.push(newStudent);
   }
 }
