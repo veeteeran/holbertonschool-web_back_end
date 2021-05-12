@@ -12,17 +12,16 @@ export default function handleProfileSignup(
   return Promise.allSettled(promises)
     .then((values) => {
       const arr = [];
-      values.forEach(value => {
-        if (value.status === "fulfilled") {
+      values.forEach((value) => {
+        if (value.status === 'fulfilled') {
           arr.push(value);
         } else {
           arr.push({
-            'status': value.status,
-            'value': value.reason
-          })
+            status: value.status,
+            value: `Error: ${value.reason.message}`,
+          });
         }
-      })
-        return arr;
-    }
-  );
+      });
+      return arr;
+    });
 }
