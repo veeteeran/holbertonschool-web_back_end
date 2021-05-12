@@ -13,7 +13,7 @@ export class HolbertonClass {
   }
 }
 export class StudentHolberton {
-  constructor(firstName, lastName) {
+  constructor(firstName, lastName, holbertonClass) {
     this._firstName = firstName;
     this._lastName = lastName;
     this._holbertonClass = holbertonClass;
@@ -28,7 +28,7 @@ export class StudentHolberton {
   }
 
   get fullStudentDescription() {
-    return `${self._firstName} ${self._lastName} - ${self._holbertonClass.year} - ${self._holbertonClass.location}`;
+    return `${this._firstName} ${this._lastName} - ${this._holbertonClass.year} - ${this._holbertonClass.location}`;
   }
 }
 
