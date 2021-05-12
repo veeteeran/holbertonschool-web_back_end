@@ -10,5 +10,9 @@ export default function handleProfileSignup(
     uploadPhoto(fileName)];
 
   return Promise.allSettled(promises)
-    .then((values) => console.log(values));
+    .then((values) => {
+      values.forEach(value => {
+        console.log(value)
+      }
+    )});
 }
