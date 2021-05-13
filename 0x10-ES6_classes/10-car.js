@@ -6,7 +6,7 @@ class Car {
   }
 
   cloneCar() {
-    return [Symbol.hasInstance(this)];
+    return new this.constructor
   }
 }
 
