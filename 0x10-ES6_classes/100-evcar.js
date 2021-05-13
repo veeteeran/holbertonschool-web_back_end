@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Car from './10-car';
 
 class EVCar extends Car {
