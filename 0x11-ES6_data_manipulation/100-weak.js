@@ -7,6 +7,6 @@ const queryAPI = (endpoint) => {
   } else {
     weakMap.set(endpoint, weakMap.get(endpoint) + 1);
   }
-}
+};
 
 export { weakMap, queryAPI };
