@@ -8,6 +8,6 @@ const hasValuesFromArray = (set, array) => {
   }
 
   return result;
-}
+};
 
 export default hasValuesFromArray;
