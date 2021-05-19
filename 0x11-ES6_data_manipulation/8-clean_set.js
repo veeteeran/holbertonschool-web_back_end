@@ -1,10 +1,8 @@
 const cleanSet = (set, startString) => {
   if (startString === '') return '';
-  if (set instanceof Set === false) return '';
-  if (typeof startString !== 'string') return '';
 
   return [...set]
-    .filter((s) => typeof s === 'string' && s.startsWith(startString))
+    .filter((s) => typeof s === 'string' && s !== '' && s.startsWith(startString))
     .map((value) => value.substring(startString.length))
     .join('-');
 };
