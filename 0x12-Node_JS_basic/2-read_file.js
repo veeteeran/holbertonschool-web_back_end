@@ -6,7 +6,7 @@ const countStudents = (path) => {
 
     const lines = data.split(/\r?\n/);
     lines.shift();
-    lines.pop();
+    lines = lines.filter(line => line !== '');
 
     console.log(`Number of students: ${lines.length}`)
 
