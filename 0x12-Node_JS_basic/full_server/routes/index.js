@@ -8,4 +8,4 @@ router.get('/', getHomePage);
 router.get('/students', StudentsController.getAllStudents);
 router.get('/students/:major', StudentsController.getAllStudentsByMajor);
 
-module.exports = router;
+export default router;
