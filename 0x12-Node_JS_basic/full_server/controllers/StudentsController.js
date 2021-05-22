@@ -25,9 +25,9 @@ class StudentsController {
       .then((value) => {
         const { major } = request.params;
         if (major === 'CS')
-          response.send(`Number of students in CS: ${value.cs.length}. List: ${value.cs.join(', ')}`);
+          response.send(`List: ${value.cs.join(', ')}`);
         else if (major === 'SWE')
-          response.send(`Number of students in SWE: ${value.swe.length}. List: ${value.swe.join(', ')}`);
+          response.send(`List: ${value.swe.join(', ')}`);
         else {
           response.status(500);
           response.send('Major parameter must be CS or SWE');
