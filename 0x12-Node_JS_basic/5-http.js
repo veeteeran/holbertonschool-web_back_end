@@ -17,9 +17,13 @@ const app = http.createServer(async (req, res) => {
           res.write(`Number of students: ${value.lines.length}\n`);
           res.write(`Number of students in CS: ${value.cs.length}. List: ${value.cs.join(', ')}\n`);
           res.write(`Number of students in SWE: ${value.swe.length}. List: ${value.swe.join(', ')}`);
+          res.end();
         })
-        .catch(console.error);
-      res.end();
+        .catch((err) => {
+          res.write(err.message);
+          res.end();
+        });
+      // res.end();
     }
   }
 });
