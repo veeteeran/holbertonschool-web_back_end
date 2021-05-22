@@ -19,9 +19,12 @@ app.get('/students', async (req, res) => {
       res.write(`Number of students: ${value.lines.length}\n`);
       res.write(`Number of students in CS: ${value.cs.length}. List: ${value.cs.join(', ')}\n`);
       res.write(`Number of students in SWE: ${value.swe.length}. List: ${value.swe.join(', ')}`);
+      res.end();
     })
-    .catch(console.error);
-  res.end();
+    .catch((err) => {
+      res.write('This is the list of our students\n');
+      res.end(err.message);
+    });
 });
 
 app.listen(port, () => {
