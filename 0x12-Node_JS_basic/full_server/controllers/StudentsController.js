@@ -28,7 +28,7 @@ class StudentsController {
         else if (major === 'SWE') response.send(`List: ${value.swe.join(', ')}`);
         else {
           response.status(500);
-          response.send('Major parameter must be CS or SWE\n');
+          response.send('Major parameter must be CS or SWE');
         }
       })
       .catch((err) => {
