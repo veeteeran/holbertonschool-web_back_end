@@ -7,7 +7,6 @@ class StudentsController {
     readDatabase(process.argv[2])
       .then((value) => {
         response.write('This is the list of our students\n');
-        response.write(`Number of students: ${value.lines.length}\n`);
         response.write(`Number of students in CS: ${value.cs.length}. List: ${value.cs.join(', ')}\n`);
         response.write(`Number of students in SWE: ${value.swe.length}. List: ${value.swe.join(', ')}`);
         response.end();
