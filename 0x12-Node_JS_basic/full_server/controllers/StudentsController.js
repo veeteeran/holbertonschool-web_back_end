@@ -24,9 +24,9 @@ class StudentsController {
     readDatabase(process.argv[2])
       .then((value) => {
         const { major } = request.params;
-        if (major === 'cs')
+        if (major === 'CS')
           response.send(`Number of students in CS: ${value.cs.length}. List: ${value.cs.join(', ')}`);
-        else if (major === 'swe')
+        else if (major === 'SWE')
           response.send(`Number of students in SWE: ${value.swe.length}. List: ${value.swe.join(', ')}`);
         else {
           response.status(500);
