@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const calculateNumber = ('./1-calcul');
+const calculateNumber = ('./2-calcul');
 
 
 it('should return 5 when calculateNumber adds 1 and 3.7', function () {
