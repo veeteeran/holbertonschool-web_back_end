@@ -20,7 +20,7 @@ describe('#sendPaymentRequestToApi()', function () {
 
   it('should output "The total is: 20"', function () {
     sendPaymentRequestToApi(10, 10);
-    spy.calledWith('The total is: 120').should.equal(true);
+    spy.calledWith('The total is: 20').should.equal(true);
   });
 
 });
