@@ -18,7 +18,7 @@
     "sinon": "^11.1.0"
   },
   "scripts": {
-    "test": "mocha --require @babel/register"
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "keywords": [],
   "author": "",
