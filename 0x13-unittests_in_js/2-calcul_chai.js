@@ -1,4 +1,4 @@
-export default function calculateNumber(type, a, b) {
+function calculateNumber(type, a, b) {
   const operations = ['SUM', 'SUBTRACT', 'DIVIDE'];
   if (operations.indexOf(type) === -1) throw Error('Cannot perform that operation');
   if (type === 'SUM') return Math.round(a) + Math.round(b);
@@ -11,3 +11,5 @@ export default function calculateNumber(type, a, b) {
     }
   }
 }
+
+module.exports = calculateNumber;
