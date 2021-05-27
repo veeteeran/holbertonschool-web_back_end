@@ -18,10 +18,3 @@ describe('Home route', () => {
     });
   });
 });
-
-describe('Cart route', () => {
-  const cartRoute = 'http://localhost:7865/([0-9]*)'
-  it('should return', done => {
-    request()
-  })
-})
