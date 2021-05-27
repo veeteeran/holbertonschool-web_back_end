@@ -8,12 +8,14 @@ app.get('/', (req, res) => {
 })
 
 app.get('/cart/:id', (req, res) => {
-  const { id } = req.params;
-  if (typeof (id) === 'Number') {
+  const { id } = req.params
+
+  if (typeof (parseInt(id)) === 'number') {
     res.status(200)
     res.send(`Payment methods for cart ${id}`)
   } else {
     res.status(404)
+    res.send("Not a number")
   }
 })
 
