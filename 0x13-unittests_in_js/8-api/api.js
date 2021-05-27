@@ -3,6 +3,7 @@ const app = express()
 const port = 7865
 
 app.get('/', (req, res) => {
+  res.status(200)
   res.send('Welcome to the payment system')
 })
 
